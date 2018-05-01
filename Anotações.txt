@@ -1,0 +1,1 @@
+pakage com.wagner.resources serve para armazenar os controles rest

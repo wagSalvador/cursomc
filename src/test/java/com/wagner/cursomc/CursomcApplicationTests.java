@@ -1,4 +1,4 @@
-package com.wagner.cursomc.cursomc;
+package com.wagner.cursomc;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
