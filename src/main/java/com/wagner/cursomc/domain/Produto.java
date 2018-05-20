@@ -1,5 +1,7 @@
 package com.wagner.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ public class Produto {
     @JoinTable(name= "PRODUTO_CATEGORIA",//Nome da tabela nome da tabela associativa
             joinColumns = @JoinColumn(name="produto"),//Chave estrangeira correspondente ao Produto
             inverseJoinColumns = @JoinColumn(name ="categoria"))//chave estrangeira da categoria
+    @JsonBackReference//Anotação que diz que já foram buscados os produtos pela outra assciação
     private List<Categoria> categorias = new ArrayList<>();
     private String nome;
     private Double preco;

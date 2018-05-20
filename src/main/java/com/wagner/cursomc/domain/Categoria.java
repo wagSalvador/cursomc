@@ -1,5 +1,7 @@
 package com.wagner.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class Categoria {
 
     private String nome;
 
+    @JsonManagedReference//anotação para o lado que você quer que venha os objetos associados
     @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
 
