@@ -1,5 +1,7 @@
 package com.wagner.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ public class Estado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @OneToMany(mappedBy = "estado")
+    @JsonBackReference
     private List<Cidade> cidades = new ArrayList<>();
 
     private String nome;

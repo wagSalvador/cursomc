@@ -1,5 +1,7 @@
 package com.wagner.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -12,6 +14,7 @@ public class Cidade {
 
     @ManyToOne
     @JoinColumn(name = "estado")
+    @JsonManagedReference
     private Estado estado;
 
     private String nome;

@@ -1,5 +1,6 @@
 package com.wagner.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wagner.cursomc.enums.TipoCliente;
 
 import javax.persistence.*;
@@ -15,7 +16,9 @@ public class Cliente {
     private String email;
     private String cpfOrCnpj;
     private Integer tipoCliente;
+
     @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference
     private List<Endereco> enderecos = new ArrayList<>();
     @ElementCollection
     @CollectionTable(name = "telefone")

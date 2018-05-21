@@ -1,5 +1,7 @@
 package com.wagner.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -12,6 +14,7 @@ public class Endereco {
 
     @ManyToOne
     @JoinColumn(name = "cliente")
+    @JsonBackReference
     private Cliente cliente;
 
     @ManyToOne
