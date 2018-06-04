@@ -1,13 +1,17 @@
 package com.wagner.cursomc;
 
 import com.wagner.cursomc.domain.*;
+import com.wagner.cursomc.enums.EstadoPagamento;
 import com.wagner.cursomc.enums.TipoCliente;
 import com.wagner.cursomc.respositories.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -15,16 +19,27 @@ public class CursomcApplication implements CommandLineRunner {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+
     @Autowired
     private ProdutoRepository produtoRepository;
+
     @Autowired
     private EstadoRepository estadoRepository;
+
     @Autowired
     private CidadeRepository cidadeRepository;
+
     @Autowired
     private ClienteRepository clienteRepository;
+
     @Autowired
     private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private PagamentoRepoistory pagamentoRepoistory;
 
     public static void main(String[] args) {
         SpringApplication.run(CursomcApplication.class, args);
@@ -78,5 +93,20 @@ public class CursomcApplication implements CommandLineRunner {
 
         clienteRepository.saveAll(Arrays.asList(cliente));
         enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
+
+        Pedido pedido1 = new Pedido(null, LocalDate.of(2017, 9, 30), cliente, endereco1);
+        Pedido pedido2 = new Pedido(null, LocalDate.of(2017, 10, 10), cliente, endereco2);
+
+        Pagamento pagamentoComCartao = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedido1, 6);
+        pedido1.setPagamento(pagamentoComCartao);
+
+        Pagamento pagamentoComBoleto = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pedido2, LocalDate.of(2017, Month.OCTOBER, 20), null);
+        pedido2.setPagamento(pagamentoComBoleto);
+
+        cliente.getPedidos().addAll(Arrays.asList(pedido1, pedido2));
+
+        pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
+        pagamentoRepoistory.saveAll(Arrays.asList(pagamentoComBoleto, pagamentoComCartao));
+
     }
 }

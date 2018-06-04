@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wagner.cursomc.enums.TipoCliente;
 
 import javax.persistence.*;
+
 import java.util.*;
+
+import org.hibernate.validator.constraints.LuhnCheck;
 
 @Entity
 public class Cliente {
@@ -23,6 +26,9 @@ public class Cliente {
     @ElementCollection
     @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<>();
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> pedidos = new ArrayList<>();
 
     public Cliente() {
     }
@@ -90,6 +96,15 @@ public class Cliente {
     public void setTelefones(Set<String> telefones) {
         this.telefones = telefones;
     }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
 
     @Override
     public boolean equals(Object o) {
