@@ -1,5 +1,6 @@
 package com.wagner.cursomc.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Embeddable;
@@ -7,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Embeddable//É pra dizer que é um subtipo
-public class ItemPedidoPK {
+public class ItemPedidoPK implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "pedido")

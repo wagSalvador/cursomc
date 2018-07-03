@@ -3,9 +3,12 @@ package com.wagner.cursomc.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Produto {
@@ -15,13 +18,16 @@ public class Produto {
     private Integer id;
     @ManyToMany
     //Anotação que define quem vai fazer o muito para muito no banco
-    @JoinTable(name= "PRODUTO_CATEGORIA",//Nome da tabela nome da tabela associativa
-            joinColumns = @JoinColumn(name="produto"),//Chave estrangeira correspondente ao Produto
-            inverseJoinColumns = @JoinColumn(name ="categoria"))//chave estrangeira da categoria
+    @JoinTable(name = "PRODUTO_CATEGORIA",//Nome da tabela nome da tabela associativa
+            joinColumns = @JoinColumn(name = "produto"),//Chave estrangeira correspondente ao Produto
+            inverseJoinColumns = @JoinColumn(name = "categoria"))//chave estrangeira da categoria
     @JsonBackReference//Anotação que diz que já foram buscados os produtos pela outra assciação
     private List<Categoria> categorias = new ArrayList<>();
     private String nome;
     private Double preco;
+
+    @OneToMany(mappedBy = "id.pedido") //mappedBy tem deve receber como ele foi mapeado do outro lado da relação
+    private Set<ItemPedido> itens = new HashSet<>();
 
     public Produto() {
     }
@@ -30,6 +36,22 @@ public class Produto {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
+    }
+
+    public List<Pedido> getPedidos() {
+        List<Pedido> pedidos = new ArrayList<>();
+        itens.forEach(itemPedido -> {
+            pedidos.add(itemPedido.getPedido());
+        });
+        return pedidos;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 
     public Integer getId() {
