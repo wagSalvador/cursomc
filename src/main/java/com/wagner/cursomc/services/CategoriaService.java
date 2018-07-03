@@ -15,12 +15,18 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    public Categoria search(Integer id) {
+    public Categoria find(Integer id) {
         Optional<Categoria> categoria = categoriaRepository.findById(id);
         return categoria.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class));
     }
 
     public Categoria insert(Categoria categoria) {
+        return categoriaRepository.save(categoria);
+    }
+
+    public Categoria update(Categoria categoria) {
+        find(categoria.getId());
+        //metodo do SpringData utiliza método save tanto para inserir quanto atualizar a direfença é que ele ferifica se o id vem null
         return categoriaRepository.save(categoria);
     }
 }
