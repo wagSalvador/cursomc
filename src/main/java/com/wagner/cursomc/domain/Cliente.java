@@ -1,5 +1,6 @@
 package com.wagner.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wagner.cursomc.enums.TipoCliente;
 
@@ -28,6 +29,7 @@ public class Cliente {
     private Set<String> telefones = new HashSet<>();
 
     @OneToMany(mappedBy = "cliente")
+    @JsonBackReference
     private List<Pedido> pedidos = new ArrayList<>();
 
     public Cliente() {

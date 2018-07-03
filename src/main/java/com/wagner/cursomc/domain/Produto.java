@@ -1,6 +1,7 @@
 package com.wagner.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -21,11 +22,12 @@ public class Produto {
     @JoinTable(name = "PRODUTO_CATEGORIA",//Nome da tabela nome da tabela associativa
             joinColumns = @JoinColumn(name = "produto"),//Chave estrangeira correspondente ao Produto
             inverseJoinColumns = @JoinColumn(name = "categoria"))//chave estrangeira da categoria
-    @JsonBackReference//Anotação que diz que já foram buscados os produtos pela outra assciação
+    @JsonBackReference//Anotação que diz que já foram buscados os produtos pela outra associação
     private List<Categoria> categorias = new ArrayList<>();
     private String nome;
     private Double preco;
 
+    @JsonIgnore // Tem que se levar em consideração o qual dado é importante pro sistema
     @OneToMany(mappedBy = "id.pedido") //mappedBy tem deve receber como ele foi mapeado do outro lado da relação
     private Set<ItemPedido> itens = new HashSet<>();
 
@@ -38,6 +40,7 @@ public class Produto {
         this.preco = preco;
     }
 
+    @JsonIgnore //Tudo que método inicializa com get é serializado
     public List<Pedido> getPedidos() {
         List<Pedido> pedidos = new ArrayList<>();
         itens.forEach(itemPedido -> {

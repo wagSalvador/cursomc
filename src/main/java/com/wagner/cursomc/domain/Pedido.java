@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Pedido {
 
@@ -23,17 +25,22 @@ public class Pedido {
     private Integer id;
     private LocalDate instante;
 
+    @JsonManagedReference//classe aonde eu quero que apareça os atributos
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
 
     @ManyToOne
     @JoinColumn(name = "cliente")
+    @JsonManagedReference
     private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "endereco_entrega")
     private Endereco endereco;
 
+
+    //SENÃO FOR COLOCADA NENHUMA ANOTAÇÃO DA SERIALIZAÇÃO DO JSON ELE ASSUME POR DEFAULT QUE ESSA É A REFERENCIA
+    //ACONTECE QUANDO SE COLOCA O @JsonIgnore em alguma relação
     @OneToMany(mappedBy = "id.pedido")
     private Set<ItemPedido> itens = new HashSet<>();//Set é utilizado para garantir que não haja coisa duplicadas
 

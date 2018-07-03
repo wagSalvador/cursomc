@@ -6,9 +6,12 @@ import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemPedido {
 
+    @JsonIgnore //Maneira para ignorar a referencia no JSON, Não ser serializado
     @EmbeddedId //Anotação para id embutido em uma classe auxiliar
     private ItemPedidoPK id = new ItemPedidoPK();
 
@@ -34,6 +37,7 @@ public class ItemPedido {
         return id;
     }
 
+    @JsonIgnore
     public Pedido getPedido() {
         return id.getPedido();
     }
