@@ -25,13 +25,12 @@ public class Pedido {
     private Integer id;
     private LocalDate instante;
 
-    @JsonManagedReference//classe aonde eu quero que apareça os atributos
+    //@JsonManagedReference//classe aonde eu quero que apareça os atributos
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
 
     @ManyToOne
     @JoinColumn(name = "cliente")
-    @JsonManagedReference
     private Cliente cliente;
 
     @ManyToOne

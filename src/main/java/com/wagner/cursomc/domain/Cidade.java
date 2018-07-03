@@ -14,7 +14,6 @@ public class Cidade {
 
     @ManyToOne
     @JoinColumn(name = "estado")
-    @JsonManagedReference
     private Estado estado;
 
     private String nome;

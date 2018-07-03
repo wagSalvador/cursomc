@@ -2,7 +2,6 @@ package com.wagner.cursomc.domain;
 
 import java.util.Objects;
 
-import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 

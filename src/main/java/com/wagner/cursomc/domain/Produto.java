@@ -22,7 +22,8 @@ public class Produto {
     @JoinTable(name = "PRODUTO_CATEGORIA",//Nome da tabela nome da tabela associativa
             joinColumns = @JoinColumn(name = "produto"),//Chave estrangeira correspondente ao Produto
             inverseJoinColumns = @JoinColumn(name = "categoria"))//chave estrangeira da categoria
-    @JsonBackReference//Anotação que diz que já foram buscados os produtos pela outra associação
+    ///@JsonBackReference//Anotação que diz que já foram buscados os produtos pela outra associação
+    @JsonIgnore
     private List<Categoria> categorias = new ArrayList<>();
     private String nome;
     private Double preco;

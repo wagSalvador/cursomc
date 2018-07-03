@@ -16,7 +16,7 @@ public class Categoria {
 
     private String nome;
 
-    @JsonManagedReference//anotação para o lado que você quer que venha os objetos associados
+    //@JsonManagedReference//anotação para o lado que você quer que venha os objetos associados
     @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
 
