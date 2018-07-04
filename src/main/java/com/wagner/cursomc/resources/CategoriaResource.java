@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import com.wagner.cursomc.domain.Categoria;
 import com.wagner.cursomc.dto.CategoriaDTO;
 import com.wagner.cursomc.services.CategoriaService;
@@ -35,22 +37,22 @@ public class CategoriaResource {
     }
 
     /**
-     * @param categoria
+     * @param categoriaDTO
      * @return
      * @RequestBody faz o Json ser convertido para objeto java
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody Categoria categoria) {
-        categoria = categoriaService.insert(categoria);
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO categoriaDTO) {
+        Categoria categoria = categoriaService.insert(categoriaDTO);
         //pega a url de inserção
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable Integer id) {
-        categoria.setId(id);
-        categoriaService.update(categoria);
+    public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer id) {
+        categoriaDTO.setId(id);
+        categoriaService.update(categoriaDTO);
         return ResponseEntity.noContent().build();
     }
 
@@ -73,4 +75,5 @@ public class CategoriaResource {
         return ResponseEntity.ok().body(categoriaDTOS);
 
     }
+
 }

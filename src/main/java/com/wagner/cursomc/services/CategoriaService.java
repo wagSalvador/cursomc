@@ -1,6 +1,7 @@
 package com.wagner.cursomc.services;
 
 import com.wagner.cursomc.domain.Categoria;
+import com.wagner.cursomc.dto.CategoriaDTO;
 import com.wagner.cursomc.respositories.CategoriaRepository;
 import com.wagner.cursomc.services.exceptions.DataIntegrityException;
 import com.wagner.cursomc.services.exceptions.ObjectNotFoundException;
@@ -27,12 +28,12 @@ public class CategoriaService {
         return categoria.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class));
     }
 
-    public Categoria insert(Categoria categoria) {
-        return categoriaRepository.save(categoria);
+    public Categoria insert(CategoriaDTO categoria) {
+        return categoriaRepository.save(fromDTO(categoria));
     }
 
-    public Categoria update(Categoria categoria) {
-        find(categoria.getId());
+    public Categoria update(CategoriaDTO categoriaDTO) {
+        Categoria categoria = find(fromDTO(categoriaDTO).getId());
         //metodo do SpringData utiliza método save tanto para inserir quanto atualizar a direfença é que ele ferifica se o id vem null
         return categoriaRepository.save(categoria);
     }
@@ -52,5 +53,9 @@ public class CategoriaService {
     public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return categoriaRepository.findAll(pageRequest);
+    }
+
+    public Categoria fromDTO(CategoriaDTO categoriaDTO) {
+        return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
     }
 }

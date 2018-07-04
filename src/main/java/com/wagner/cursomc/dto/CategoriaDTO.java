@@ -1,11 +1,17 @@
 package com.wagner.cursomc.dto;
 
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.wagner.cursomc.domain.Categoria;
 
 public class CategoriaDTO {
 
     private Integer id;
 
+    @NotBlank(message = "Preenchimento obrigátorio")
+    @Length(min = 5, max = 80, message = "O tamnanho deve ser entre 5 e 80 caracteres")
     private String nome;
 
     public CategoriaDTO() {
